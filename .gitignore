@@ -25,3 +25,4 @@ jspm_packages/
 yarn-error.log
 .pnp
 .yarn-integrity
+.vercel
