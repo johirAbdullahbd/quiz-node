@@ -9,6 +9,7 @@ const FILE_CERTIFICATES = "certificates.json";
 // Function to load users from a file with error handling
 const loadUsers = (fileName) => {
   try {
+    // const data = fs.readFile(fileName, "utf-8");
     const data = fs.readFileSync(fileName, "utf-8");
     return JSON.parse(data);
   } catch (error) {
@@ -29,13 +30,29 @@ const loadData = (fileName) => {
 };
 
 // Function to save data to a file with error handling
-const saveData = (fileName, data) => {
+// const saveData = (fileName, data) => {
+//   try {
+//     fs.writeFile(fileName, JSON.stringify(data, null, 2), "utf-8");
+//     // fs.writeFileSync(fileName, JSON.stringify(data), "utf-8");
+//   } catch (error) {
+//     console.error(`Error writing ${fileName} file:`, error);
+//   }
+// };
+async function saveData(fileName, data) {
   try {
-    fs.writeFileSync(fileName, JSON.stringify(data), "utf-8");
-  } catch (error) {
-    console.error(`Error writing ${fileName} file:`, error);
+    fs.writeFile(fileName, JSON.stringify(data), "utf-8", (err) => {
+      if (err) {
+        // Handle the error
+        console.error("Error writing file:", err);
+        return;
+      }
+
+      console.log("File written successfully");
+    });
+  } catch (err) {
+    console.error("Error writing file:", err);
   }
-};
+}
 
 // Endpoint to handle exam data
 const examData = (req, res) => {
@@ -71,7 +88,7 @@ const examData = (req, res) => {
 const certificateData = (req, res) => {
   const { uniqueString, JAQC, email, password, name } = req.body;
   const users = loadUsers(FILE_UNIQUE_STRING);
-
+  console.log("hello");
   const existingUser = users.find((user) => user.uniqueString === uniqueString);
 
   if (existingUser) {

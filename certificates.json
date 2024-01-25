@@ -1,10 +1,1 @@
-[
-  {
-    "15307696": {
-      "email": "johirabdullahbd@gmail.com",
-      "password": "kdjkdju",
-      "name": "johurul",
-      "rejult": { "0": { "subjectName": "Javascript", "score": 0.2 } }
-    }
-  }
-]
+[{"15307696":{"email":"johirabdullahbd@gmail.com","password":"kdjkdju","name":"johurul","rejult":{"0":{"subjectName":"Javascript","score":0.2}}}},{"25502646":{"email":"johirabdullahbd@gmail.com","password":"kjuiyu","name":"abdullah ","rejult":{"0":{"subjectName":"Javascript","score":0.1}}}},{"29127668":{"email":"johirabdullahbd@gmail.com","password":"jhuhjk","name":"abdullah ","rejult":{"0":{"subjectName":"CSS","score":0}}}}]

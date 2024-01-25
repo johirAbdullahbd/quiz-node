@@ -1,11 +1,1 @@
-[
-  { "uniqueString": "5fbb972f-a61f-488c-9d69-6db6f32586a6", "subjectName": "Javascript", "score": 0.1 },
-  { "uniqueString": "89561b3c-6887-49e7-99b4-a927cb4615bd", "subjectName": "Javascript", "score": 0.2 },
-  { "uniqueString": "fd57167e-dbe6-49ee-b0bb-a34514c66efc", "subjectName": "Javascript", "score": 0.2 },
-  { "uniqueString": "e7d4eaf7-e977-4e67-92bf-10d14a8f4ad2", "subjectName": "Javascript", "score": 0 },
-  { "uniqueString": "e83611ad-d4e6-4209-922c-c49aabf890b1", "subjectName": "Javascript", "score": 0 },
-  { "uniqueString": "0950688c-8dca-456a-95cd-ecc43385a375", "subjectName": "Javascript", "score": 0 },
-  { "uniqueString": "bd6f53f4-a3f4-46ce-9bf4-bae4710380d4", "subjectName": "Javascript", "score": 0 },
-  { "uniqueString": "b05913dc-3ace-4bb4-9446-3557a3ebb740", "subjectName": "Javascript", "score": 0.1 },
-  { "uniqueString": "3c3a41da-e84d-41a0-b8ba-e48c6f67bfeb", "subjectName": "Javascript", "score": 0.1 }
-]
+[{"uniqueString":"5fbb972f-a61f-488c-9d69-6db6f32586a6","subjectName":"Javascript","score":0.1},{"uniqueString":"89561b3c-6887-49e7-99b4-a927cb4615bd","subjectName":"Javascript","score":0.2},{"uniqueString":"fd57167e-dbe6-49ee-b0bb-a34514c66efc","subjectName":"Javascript","score":0.2},{"uniqueString":"e7d4eaf7-e977-4e67-92bf-10d14a8f4ad2","subjectName":"Javascript","score":0},{"uniqueString":"e83611ad-d4e6-4209-922c-c49aabf890b1","subjectName":"Javascript","score":0},{"uniqueString":"0950688c-8dca-456a-95cd-ecc43385a375","subjectName":"Javascript","score":0},{"uniqueString":"bd6f53f4-a3f4-46ce-9bf4-bae4710380d4","subjectName":"Javascript","score":0},{"uniqueString":"b05913dc-3ace-4bb4-9446-3557a3ebb740","subjectName":"Javascript","score":0.1},{"uniqueString":"3c3a41da-e84d-41a0-b8ba-e48c6f67bfeb","subjectName":"Javascript","score":0.1},{"uniqueString":"fe2550eb-6861-4b04-b034-6f8a503633b7","subjectName":"Javascript","score":0},{"uniqueString":"47573286-e75c-481f-b529-0fe9cc0cbc3d","subjectName":"CSS","score":0}]
