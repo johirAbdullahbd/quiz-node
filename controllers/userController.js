@@ -63,8 +63,7 @@ const examData = (req, res) => {
       const index = users.findIndex((user) => user.uniqueString === uId);
       users.splice(index, 1);
       saveData(FILE_UNIQUE_STRING, users);
-    }, 50000); // 30 minutes in milliseconds
-    // }, 1800000); // 30 minutes in milliseconds
+    }, 1800000); // 30 minutes in milliseconds
   }
 };
 
