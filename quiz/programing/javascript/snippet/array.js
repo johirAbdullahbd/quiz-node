@@ -1,0 +1,111 @@
+const arraySnippet = [
+  {
+    question: "What will be logged to the console?",
+    img: "https://ipfs.filebase.io/ipfs/QmYBPxPYuq7beYBC33VxkXYDbntc2NumrntP4NdNGkhiuC",
+    options: ["[1, 2, 3, 4, 5]", "[2, 4]", "[1, 3, 5]", "[1, 2, 2, 3, 4, 4, 5]", "[1, 2, 2, 3, 4, 4, 5] with unique values"],
+    correctAnswer: "[1, 2, 3, 4, 5]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/Qmbat1TUdNj5tKRNeNA4Ge34KtStawpdJybVTnuYdWYT4V",
+    options: ["{ A: [10, 20], B: [15] }", "{ A: [10], B: [15], C: [20] }", "[10, 15, 20]", "Error", "{ A: { value: 20 }, B: { value: 15 } }"],
+    correctAnswer: "{ A: [10, 20], B: [15] }",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmZYh7oN4mQxnPfjgeMECpb2xvA86PJwWtjMD1mv9FXkKN",
+    options: ["[1, 2]", "[3, 4]", "[5, 6]", "[1, 2, 3, 4, 5, 6]", "[]"],
+    correctAnswer: "[3, 4]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmaXBc33YBEWktAxoR5MThgdgiZ3KhLgCRataF14NJH8V9",
+    options: [
+      "[[1, 2], [3, 4], [5, 6], [7, 8]]",
+      "[[1, 2, 3], [4, 5, 6], [7, 8]]",
+      "[[1, 2, 3, 4], [5, 6, 7, 8]]",
+      "[[1, 2, 3], [4, 5, 6], [7, 8, undefined]]",
+      "[[1], [2], [3], [4], [5], [6], [7], [8]]",
+    ],
+    correctAnswer: "[[1, 2, 3], [4, 5, 6], [7, 8]]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmWLEWgpSAV6orsghdunpZeaVqiPinbkqhKTLk5SDzs5RC",
+    options: [
+      "[{ name: 'Alice' }, { age: 30 }, { city: 'Wonderland' }]",
+      "{ name: 'Alice', age: 30, city: 'Wonderland' }",
+      "[{ Alice: 'name' }, { 30: 'age' }, { Wonderland: 'city' }]",
+      "Error",
+      "{ keys: ['name', 'age', 'city'], values: ['Alice', 30, 'Wonderland'] }",
+    ],
+    correctAnswer: "[{ name: 'Alice' }, { age: 30 }, { city: 'Wonderland' }]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmVXRLNFMbHB8CyXVFiHTwN5VrKF4GhEi4ZCt4vLtaD82o",
+    options: ["[2, 4, 6, 8, 10]", "[8]", "[4, 8]", "[1, 2, 3, 4, 5]", "Error"],
+    correctAnswer: "[4, 8]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmUDRs7miDtozRNrtRiN7rsjnVJ3e7jqoUpgvbkx4D89kq",
+    options: [
+      "['Alice', 'Bob', 'Charlie']",
+      "[{ name: 'Alice' }, { name: 'Bob' }, { name: 'Charlie' }]",
+      "[1, 2, 3]",
+      "Error",
+      "{ users: ['Alice', 'Bob', 'Charlie'] }",
+    ],
+    correctAnswer: "['Alice', 'Bob', 'Charlie']",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmeSiC3uhfoV6bM9JtoENxJbewJuTsPT8b37WXBuonzmi6",
+    options: ["150, 30", "150, 50", "[10, 20, 30, 40, 50]", "Error", "50, 10"],
+    correctAnswer: "150, 30",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmeMog4d3CSGcMCzmBxFrv31jqXB7a7YmvUv1VhuxWaW9e",
+    options: ["[5, 4, 3, 2, 1]", "[1, 2, 3, 4, 5]", "Error", "[1, 2, 3, 4, 5] (original array remains unchanged)", "[undefined, 5, 4, 3, 2, 1]"],
+    correctAnswer: "[5, 4, 3, 2, 1]",
+  },
+  {
+    question: "What will be logged to the console?",
+    ims:"https://ipfs.filebase.io/ipfs/QmQTGvH9bcWu94ttG5CAAkdiYRcb3QR6xxacBfNVzwPwYk",
+    options: [
+      "[{ name: 'Alice', age: 25 }, { name: 'Charlie', age: 22 }, { name: 'Bob', age: 30 }]",
+      "[{ name: 'Charlie', age: 22 }, { name: 'Alice', age: 25 }, { name: 'Bob', age: 30 }]",
+      "Error",
+      "[{ name: 'Bob', age: 30 }, { name: 'Alice', age: 25 }, { name: 'Charlie', age: 22 }]",
+      "[{ name: 'Bob', age: 30 }, { name: 'Charlie', age: 22 }, { name: 'Alice', age: 25 }]",
+    ],
+    correctAnswer: "[{ name: 'Charlie', age: 22 }, { name: 'Alice', age: 25 }, { name: 'Bob', age: 30 }]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmRSxU9SWrXKcSvTYwMmgc8WAWc6ATWqt8exvyM1vSdEGp",
+    options: ["21", "15", "[1, 2, 3, 4, 5, 6]", "Error", "[1, 2, 3, 4, 5, 6] with no sum"],
+    correctAnswer: "21",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmYZEbcrn7aHQYyHSNdGNQ3Udna7B7fMgQUaZ2QiBLGsT1",
+    options: ["[30, 50]", "[20, 40]", "[10, 30, 50]", "Error", "[20, 40, 50]"],
+    correctAnswer: "[20, 40]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmZtz9HnAr235bdqiVLxSsUa3NxGpZgAfxf6iMnTf3RsB8",
+    options: ["[1, 2]", "[3, 4]", "[5, 6]", "[1, 2, 3, 4, 5, 6]", "[]"],
+    correctAnswer: "[3, 4]",
+  },
+  {
+    question: "What will be logged to the console?",
+    img:"https://ipfs.filebase.io/ipfs/QmZ4WjEjejVQDfC1MBqDq6tsDkbLFVHtsxFQqz8ndjgffm",
+    options: ["[2, 4, 6, 8, 10]", "[1, 4, 9, 16, 25]", "[2, 8, 18, 32, 50]", "Error", "[1, 2, 3, 4, 5] (original array remains unchanged)"],
+    correctAnswer: "[2, 8, 18, 32, 50]",
+  },
+];
+module.exports = arraySnippet;
