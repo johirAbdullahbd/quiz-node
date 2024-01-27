@@ -1,156 +1,114 @@
-const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const generateUniqueNumber = require("./generateKye");
 
-// File names as constants
-const FILE_UNIQUE_STRING = "uniqueString.json";
-const FILE_CERTIFICATES = "certificates.json";
+// Import Mongoose models
+const { UniqueStringModel, CertificateModel } = require("../schema/userSchema");
 
-// Function to load users from a file with error handling
-const loadUsers = (fileName) => {
+// Function to save data to MongoDB with error handling
+async function saveData(model, data) {
   try {
-    // const data = fs.readFile(fileName, "utf-8");
-    const data = fs.readFileSync(fileName, "utf-8");
-    return JSON.parse(data);
+    await model.create(data);
+    console.log(`Data saved for ${model.modelName}`);
   } catch (error) {
-    console.error(`Error reading ${fileName} file:`, error);
-    return [];
-  }
-};
-
-// Function to load data from a file with error handling
-const loadData = (fileName) => {
-  try {
-    const data = fs.readFileSync(fileName, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error(`Error reading ${fileName} file:`, error);
-    return [];
-  }
-};
-
-// Function to save data to a file with error handling
-// const saveData = (fileName, data) => {
-//   try {
-//     fs.writeFile(fileName, JSON.stringify(data, null, 2), "utf-8");
-//     // fs.writeFileSync(fileName, JSON.stringify(data), "utf-8");
-//   } catch (error) {
-//     console.error(`Error writing ${fileName} file:`, error);
-//   }
-// };
-async function saveData(fileName, data) {
-  try {
-    fs.writeFile(fileName, JSON.stringify(data), "utf-8", (err) => {
-      if (err) {
-        // Handle the error
-        console.error("Error writing file:", err);
-        return;
-      }
-
-      console.log("File written successfully");
-    });
-  } catch (err) {
-    console.error("Error writing file:", err);
+    console.error(`Error saving data for ${model.modelName} to MongoDB:`, error);
   }
 }
 
 // Endpoint to handle exam data
-const examData = (req, res) => {
-  const uId = uuidv4();
+const examData = async (req, res) => {
   const { uniqueString, subjectName, score } = req.body;
-  const users = loadUsers(FILE_UNIQUE_STRING);
 
-  const existingUserIndex = users.findIndex((user) => user.uniqueString === uniqueString);
+  try {
+    const existingUser = await UniqueStringModel.findOne({ uniqueString });
 
-  if (existingUserIndex !== -1) {
-    console.log("dd");
-    users[existingUserIndex] = { uniqueString, subjectName, score };
-    saveData(FILE_UNIQUE_STRING, users);
-    res.json({ success: true, uniqueString, message: "Data saved for user" });
-  } else {
-    console.log("ll");
-    users.push({ uniqueString: uId, subjectName, score });
-    saveData(FILE_UNIQUE_STRING, users);
-    res.json({ success: true, uniqueString: uId, message: "New user created and data saved" });
-    console.log("helolo");
-    // Creata only data deletion after 30 minutes
-    setTimeout(() => {
-      console.log("call set Timeout");
-      // Delete elements from the users array
-      const index = users.findIndex((user) => user.uniqueString === uId);
-      users.splice(index, 1);
-      saveData(FILE_UNIQUE_STRING, users);
-    }, 1800000); // 30 minutes in milliseconds
+    if (existingUser) {
+      existingUser.subjectName = subjectName;
+      existingUser.score = score;
+      await existingUser.save();
+      res.json({ success: true, uniqueString, message: "Data saved for user" });
+    } else {
+      const newUser = new UniqueStringModel({
+        uniqueString: uuidv4(),
+        subjectName,
+        score,
+      });
+      await newUser.save();
+      res.json({ success: true, uniqueString: newUser.uniqueString, message: "New user created and data saved" });
+
+      // Create data deletion after 30 minutes
+      setTimeout(async () => {
+        console.log("call set Timeout");
+        await newUser.deleteOne(); // Use deleteOne for removing a document
+      }, 1800000); // 30 minutes in milliseconds
+    }
+  } catch (error) {
+    console.error("Error in examData:", error);
+    res.json({ success: false, message: "Error processing exam data" });
   }
 };
 
 // Endpoint to handle certificate data
-const certificateData = (req, res) => {
+const certificateData = async (req, res) => {
   const { uniqueString, JAQC, email, password, name } = req.body;
-  const users = loadUsers(FILE_UNIQUE_STRING);
-  console.log("hello");
-  const existingUser = users.find((user) => user.uniqueString === uniqueString);
 
-  if (existingUser) {
-    try {
-      const certificates = loadData(FILE_CERTIFICATES);
-      const keyArr = certificates.map((cert) => Object.keys(cert)[0]);
+  try {
+    const existingUser = await UniqueStringModel.findOne({ uniqueString });
 
-      if (name) {
-        const code = generateUniqueNumber(keyArr);
-        certificates.push({
-          [code]: {
-            email,
-            password,
-            name,
-            rejult: { 0: { subjectName: existingUser.subjectName, score: existingUser.score } },
-          },
-        });
-        saveData(FILE_CERTIFICATES, certificates);
+    if (!existingUser) {
+      res.json({ success: false, message: "Invalid user" });
+      return;
+    }
+
+    const certificates = await CertificateModel.find();
+    const keyArr = certificates.map((cert) => cert.JAQC);
+
+    if (name) {
+      const code = generateUniqueNumber(keyArr);
+      certificates.push({
+        JAQC: code,
+        email,
+        password,
+        name,
+        rejult: [{ subjectName: existingUser.subjectName, score: existingUser.score }],
+      });
+      await saveData(CertificateModel, certificates);
+      res.json({ success: true, JAQC: code, message: "Data saved for user" });
+    } else {
+      const code = keyArr.find((key) => key == JAQC);
+
+      if (!code) {
+        res.json({ success: false, message: "Code is not match" });
+        return;
+      }
+
+      const index = certificates.findIndex((item) => item.JAQC === code);
+      const obj = certificates[index];
+
+      if (obj.password === password && obj.email === email) {
+        obj.rejult.push({ subjectName: existingUser.subjectName, score: existingUser.score });
+        await saveData(CertificateModel, certificates);
         res.json({ success: true, JAQC: code, message: "Data saved for user" });
       } else {
-        const code = keyArr.find((key) => key == JAQC);
-
-        if (code) {
-          const index = certificates.findIndex((item) => Object.keys(item)[0] === code);
-          const obj = certificates[index];
-          const len = Object.keys(obj[code].rejult).length;
-
-          if (obj[code].password === password && obj[code].email === email) {
-            obj[code].rejult[len] = { subjectName: existingUser.subjectName, score: existingUser.score };
-            certificates[index] = obj;
-            saveData(FILE_CERTIFICATES, certificates);
-            res.json({ success: true, JAQC: code, message: "Data saved for user" });
-          } else {
-            res.json({ success: false, message: "password or email is not match" });
-          }
-        } else {
-          res.json({ success: false, message: "code is not match" });
-        }
+        res.json({ success: false, message: "Password or email is not match" });
       }
-    } catch (error) {
-      console.error("Error in certificateData:", error);
-      res.json({ success: false, message: "Error processing certificate data" });
     }
-  } else {
-    res.json({ success: false, message: "invalid user" });
+  } catch (error) {
+    console.error("Error in certificateData:", error);
+    res.json({ success: false, message: "Error processing certificate data" });
   }
 };
 
 // Endpoint to get result from certificate data
-const rejultCertificate = (req, res) => {
+const rejultCertificate = async (req, res) => {
   const JAQC = req.body.JAQC;
 
   try {
-    const certificates = loadData(FILE_CERTIFICATES);
+    const certificate = await CertificateModel.findOne({ JAQC });
 
-    const index = certificates.findIndex((item) => Object.keys(item)[0] === JAQC);
-    if (index !== -1) {
-      const data = certificates[index][JAQC];
-      console.log(data, "dd");
-      res.json({ success: true, name: data.name, JAQC, rejult: data.rejult });
+    if (certificate) {
+      res.json({ success: true, name: certificate.name, JAQC, rejult: certificate.rejult });
     } else {
-      res.json({ success: false, message: "invalid JAQC" });
+      res.json({ success: false, message: "Invalid JAQC" });
     }
   } catch (error) {
     console.error("Error in rejultCertificate:", error);
