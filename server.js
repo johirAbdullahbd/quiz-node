@@ -8,7 +8,8 @@ const quizRoutes = require("./routes/quizRoutes");
 const app = express();
 
 // Mongoose connection setup
-const uri = "mongodb+srv://johirabdullahbd:tne6vQRwCC6ZTzJf@cluster1.8fm4vs6.mongodb.net/"; // Replace with your MongoDB Atlas connection string
+// const uri = "mongodb+srv://johirabdullahbd:tne6vQRwCC6ZTzJf@cluster1.8fm4vs6.mongodb.net/"; // Replace with your MongoDB Atlas connection string
+const uri = "mongodb+srv://johurul:TlUqQc1vp97pKman@cluster3.bqazuid.mongodb.net/"; // Replace with your MongoDB Atlas connection string
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -29,7 +30,8 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/api/quiz", quizRoutes);
 
-const PORT = "https://quiz-node-3j0ldw5h3-johirabdullahs-projects.vercel.app/" || 4000;
+const PORT = process.env.PORT || 4000;
+// const PORT = "https://quiz-node-3j0ldw5h3-johirabdullahs-projects.vercel.app/" || 4000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
