@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/api/quiz", quizRoutes);
 
-const PORT = process.env.PORT || 4000;
+const PORT = "https://quiz-node-3j0ldw5h3-johirabdullahs-projects.vercel.app/" || 4000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
