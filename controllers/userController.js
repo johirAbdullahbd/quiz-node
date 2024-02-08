@@ -16,21 +16,27 @@ async function saveData(model, data) {
 
 // Endpoint to handle exam data
 const examData = async (req, res) => {
-  const { uniqueString, subjectName, score } = req.body;
+  const { uniqueString, subjectName, step, score } = req.body;
+  console.log(req.body, "body");
 
   try {
     const existingUser = await UniqueStringModel.findOne({ uniqueString });
 
     if (existingUser) {
+      console.log(existingUser, "exit");
       existingUser.subjectName = subjectName;
-      existingUser.score = score;
+      existingUser.rejult[step] = score;
       await existingUser.save();
       res.json({ success: true, uniqueString, message: "Data saved for user" });
     } else {
+      if (step !== "step1") {
+        res.json({ success: false, message: "running time finish" });
+        return;
+      }
       const newUser = new UniqueStringModel({
         uniqueString: uuidv4(),
+        rejult: { [step]: score },
         subjectName,
-        score,
       });
       await newUser.save();
       res.json({ success: true, uniqueString: newUser.uniqueString, message: "New user created and data saved" });
@@ -61,6 +67,12 @@ const certificateData = async (req, res) => {
 
     const certificates = await CertificateModel.find();
     const keyArr = certificates.map((cert) => cert.JAQC);
+    const data = existingUser.rejult;
+    const number = Object.values(data).reduce((accumulator, currentValue) => {
+      return accumulator + currentValue;
+    }, 0);
+    const score = (number / 100) * 10;
+    const points = parseFloat(score.toFixed(10));
 
     if (name) {
       const code = generateUniqueNumber(keyArr);
@@ -69,7 +81,7 @@ const certificateData = async (req, res) => {
         email,
         password,
         name,
-        rejult: [{ subjectName: existingUser.subjectName, score: existingUser.score }],
+        rejult: [{ subjectName: existingUser.subjectName, score: points }],
       });
       await saveData(CertificateModel, certificates);
       res.json({ success: true, JAQC: code, message: "Data saved for user" });
@@ -85,7 +97,7 @@ const certificateData = async (req, res) => {
       const obj = certificates[index];
 
       if (obj.password === password && obj.email === email) {
-        obj.rejult.push({ subjectName: existingUser.subjectName, score: existingUser.score });
+        obj.rejult.push({ subjectName: existingUser.subjectName, score });
         await saveData(CertificateModel, certificates);
         res.json({ success: true, JAQC: code, message: "Data saved for user" });
       } else {
@@ -100,13 +112,22 @@ const certificateData = async (req, res) => {
 
 // Endpoint to get result from certificate data
 const rejultCertificate = async (req, res) => {
-  const JAQC = req.body.JAQC;
+  const { JAQC, id } = req.body;
 
   try {
     const certificate = await CertificateModel.findOne({ JAQC });
 
     if (certificate) {
       res.json({ success: true, name: certificate.name, JAQC, rejult: certificate.rejult });
+      if (id) {
+        UniqueStringModel.deleteMany({ id }, (err) => {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log("Documents deleted successfully");
+          }
+        });
+      }
     } else {
       res.json({ success: false, message: "Invalid JAQC" });
     }

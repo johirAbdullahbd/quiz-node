@@ -3,10 +3,10 @@ const quizModel = require("../models/quizModel");
 const javascript = require("../models/javascriptModel");
 
 const getQuestions = (req, res) => {
-  const subjectName = req.body.subjectName;
+  const { subjectName, step } = req.body;
   console.log(subjectName, "subjectName");
   try {
-    const allQuestions = javascript.getQuestions();
+    const allQuestions = javascript.getQuestions(step);
     res.json({ success: true, allQuestions });
   } catch (error) {
     console.error("Error getting quiz questions:", error);

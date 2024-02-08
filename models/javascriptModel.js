@@ -52,7 +52,7 @@ const webBrowsers2 = require("../quiz/programing/javascript/serverSide/webBrowse
 const typeValuesVariablesSnipeet = require("../quiz/programing/javascript/snippet/typesValuesVariable");
 const typeValuesVariables = require("../quiz/programing/javascript/main/typesValuesVariables");
 
-const getQuestions = () => {
+const getQuestions = (step) => {
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -61,15 +61,8 @@ const getQuestions = () => {
     return array;
   };
 
-  const data = [
-    arrayRelatedMethod,
-    augmentationOfClasses,
-    closures,
-    exprssionsOperators,
-    functionalPrograming,
-    invokingFunctions,
-    classes,
-    modules,
+  const step1 = [arrayRelatedMethod, augmentationOfClasses, closures, exprssionsOperators, functionalPrograming, invokingFunctions, classes, modules];
+  const step2 = [
     subsets,
     extensions,
     lexicalStructure,
@@ -79,6 +72,8 @@ const getQuestions = () => {
     shortHand,
     statements,
     typeValuesVariables,
+  ];
+  const step3 = [
     asynchronousRhino,
     cachingDebuggingAnimation,
     clientSideFrameworks,
@@ -92,6 +87,8 @@ const getQuestions = () => {
     invocationPerformanceNavigation,
     operations,
     parsing,
+  ];
+  const step4 = [
     performanceMeasures,
     scriptedHTTP,
     scriptingCss,
@@ -104,6 +101,8 @@ const getQuestions = () => {
     windowsObject,
     arraySnippet,
     classesSnippet,
+  ];
+  const step5 = [
     clientServerSideScriptingSnipeet,
     closuresSnipeet,
     definingInvokingFunctions,
@@ -114,19 +113,46 @@ const getQuestions = () => {
     statementSnipeet,
     typeValuesVariablesSnipeet,
   ];
-
-  const numberSliceDataArray = [
-    4, 2, 1, 2, 4, 2, 4, 1, 1, 1, 4, 3, 3, 1, 1, 2, 4, 1, 2, 1, 2, 1, 2, 1, 3, 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 2, 1, 2, 1, 1, 5, 1, 2, 2, 2, 2, 4, 2, 2,
-    2, 2,
-  ];
+  const stepNumber5 = [2, 2, 2, 2, 4, 2, 2, 2, 2];
+  const stepNumber4 = [2, 1, 1, 2, 1, 2, 1, 2, 1, 1, 5, 1];
+  const stepNumber3 = [1, 3, 1, 2, 1, 2, 1, 3, 1, 1, 2, 1, 1];
+  const stepNumber2 = [1, 1, 4, 3, 3, 1, 1, 2, 4];
+  const stepNumber1 = [4, 2, 1, 2, 4, 2, 4, 1];
   const newArr = [];
 
   // Loop through the shuffled arrays
-  for (let i = 0; i < data.length; i++) {
-    const array = shuffleArray(data[i]);
-    const slicingArray = array.slice(0, numberSliceDataArray[i]);
-    newArr.push(...slicingArray);
+  if (step == "step1") {
+    for (let i = 0; i < step1.length; i++) {
+      const array = shuffleArray(step1[i]);
+      const slicingArray = array.slice(0, stepNumber1[i]);
+      newArr.push(...slicingArray);
+    }
+  } else if (step == "step2") {
+    for (let i = 0; i < step2.length; i++) {
+      const array = shuffleArray(step2[i]);
+      const slicingArray = array.slice(0, stepNumber2[i]);
+      newArr.push(...slicingArray);
+    }
+  } else if (step == "step3") {
+    for (let i = 0; i < step3.length; i++) {
+      const array = shuffleArray(step3[i]);
+      const slicingArray = array.slice(0, stepNumber3[i]);
+      newArr.push(...slicingArray);
+    }
+  } else if (step == "step4") {
+    for (let i = 0; i < step4.length; i++) {
+      const array = shuffleArray(step4[i]);
+      const slicingArray = array.slice(0, stepNumber4[i]);
+      newArr.push(...slicingArray);
+    }
+  } else if (step == "step5") {
+    for (let i = 0; i < step5.length; i++) {
+      const array = shuffleArray(step5[i]);
+      const slicingArray = array.slice(0, stepNumber5[i]);
+      newArr.push(...slicingArray);
+    }
   }
+
   const finallArr = shuffleArray(newArr);
   return finallArr;
 };

@@ -12,9 +12,13 @@ const uniqueStringSchema = new Schema({
     type: String,
     required: true,
   },
-  score: {
-    type: Number,
-    required: true,
+
+  rejult: {
+    step1: Number,
+    step2: Number,
+    step3: Number,
+    step4: Number,
+    step5: Number,
   },
 });
 
