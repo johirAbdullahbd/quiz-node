@@ -55,6 +55,15 @@ const certificateSchema = new Schema({
   ],
 });
 
+const userSchema = new Schema({
+  firstName: String,
+  lastName: String,
+  email: String,
+  description: String,
+});
+
+const User = mongoose.model("User", userSchema);
+
 // Create models based on the schemas
 const UniqueStringModel = mongoose.model("UniqueString", uniqueStringSchema);
 const CertificateModel = mongoose.model("Certificate", certificateSchema);
@@ -62,4 +71,5 @@ const CertificateModel = mongoose.model("Certificate", certificateSchema);
 module.exports = {
   UniqueStringModel,
   CertificateModel,
+  User,
 };

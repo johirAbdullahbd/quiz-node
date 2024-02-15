@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const generateUniqueNumber = require("./generateKye");
 
 // Import Mongoose models
-const { UniqueStringModel, CertificateModel } = require("../schema/userSchema");
+const { UniqueStringModel, CertificateModel, User } = require("../schema/userSchema");
 
 // Function to save data to MongoDB with error handling
 async function saveData(model, data) {
@@ -136,5 +136,27 @@ const rejultCertificate = async (req, res) => {
     res.json({ success: false, message: "Error retrieving rejult certificate data" });
   }
 };
+const createUser = async (req, res) => {
+  console.log(req.body, "reqBody");
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).send(user);
+  } catch (error) {
+    console.log("error", error);
+    res.status(400).send(error);
+  }
+};
 
-module.exports = { examData, certificateData, rejultCertificate };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    console.log(users, "users");
+    res.send(users);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).send(error);
+  }
+};
+
+module.exports = { examData, certificateData, rejultCertificate, createUser, getAllUsers };

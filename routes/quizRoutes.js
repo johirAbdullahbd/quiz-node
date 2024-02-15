@@ -10,5 +10,8 @@ router.post("/questions", quizController.getQuestions);
 // router.post("/getjavascript", quizController.getQuiz);
 router.put("/questions/:id", quizController.updateQuestion);
 router.delete("/questions/:id", quizController.deleteQuestion);
+//
+router.post("/ask", userController.createUser);
+router.get("/ask", userController.getAllUsers);
 
 module.exports = router;
